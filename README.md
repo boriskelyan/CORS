@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cours complet et interactif sur les réseaux informatiques, le modèle TCP/IP et le sertissage RJ45.">
-    <title>Apprendre le Réseau - Cours complet & Pratique</title>
+    <meta name="description" content="Cours complet, stable et interactif sur les réseaux informatiques, le modèle TCP/IP et le sertissage RJ45.">
+    <title>Apprendre le Réseau - Version Corrigée & Stable</title>
     <style>
         :root {
             --bg-color: #f0f4f8;
@@ -32,7 +32,7 @@
             --box-bg: #0f172a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.2s, color 0.2s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-color); padding: 20px; color: var(--text-color); line-height: 1.65; }
         .container { max-width: 1040px; margin: auto; background: var(--card-bg); border-radius: 14px; padding: 28px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
         
@@ -45,8 +45,7 @@
         /* Navigation par onglets */
         .tabs { display: flex; gap: 10px; margin: 15px 0 18px; flex-wrap: wrap; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; }
         .tab { padding: 11px 20px; background: var(--accent-blue); border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--text-color); }
-        .tab.active { background: #1a3c6e; color: white; }
-        [data-theme="dark"] .tab.active { background: var(--primary); color: #0f172a; }
+        .tab.active { background: var(--primary); color: white; }
         
         .content { display: none; padding: 8px 0; }
         .content.active { display: block; }
@@ -59,7 +58,6 @@
         .card li { margin-bottom: 5px; }
         
         .highlight { background: rgba(59, 130, 246, 0.1); padding: 12px 15px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #3b82f6; }
-        .warning { background: rgba(245, 158, 11, 0.1); padding: 12px 15px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #f59e0b; }
         .schema-box { background: var(--box-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; overflow-x: auto; }
         
         pre { background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 8px; overflow-x: auto; margin: 10px 0; font-size: 0.93rem; }
@@ -71,7 +69,7 @@
         
         /* Boutons & Champs */
         .btn { padding: 10px 18px; background: #1a3c6e; color: white; border: none; border-radius: 7px; cursor: pointer; margin: 5px 3px 5px 0; font-weight: 500; }
-        [data-theme="dark"] .btn { background: var(--primary); color: #0f172a; font-weight: bold; }
+        .btn:hover { opacity: 0.9; }
         .btn-secondary { background: #64748b; color: white; }
         input[type="text"] { padding: 9px 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); border-radius: 6px; width: 220px; max-width: 100%; font-size: 1rem; }
         
@@ -79,7 +77,6 @@
         table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.94rem; }
         th, td { border: 1px solid var(--border-color); padding: 9px 11px; text-align: left; }
         th { background: #1a3c6e; color: white; }
-        [data-theme="dark"] th { background: #334155; color: white; }
         
         /* Quiz & Exercices */
         .quiz-question { margin: 16px 0; padding: 16px; background: var(--box-bg); border-radius: 10px; border: 1px solid var(--border-color); }
@@ -132,34 +129,31 @@
     </div>
 
     <div id="cours" class="content active">
-
         <div class="card">
             <h3>1. Qu'est-ce qu'un Protocole ?</h3>
             <p>Un <strong>protocole</strong> est un ensemble formel de règles et de conventions qui régit l’échange d’informations entre des unités connectées en réseau.</p>
             
             <h4>Protocoles orientés connexion vs non orientés connexion :</h4>
             <ul>
-                <li><strong>Orienté connexion (ex: TCP) :</strong> Établit un dialogue formel (*handshake*) entre la source et le destinataire avant tout transfert. Les données de la couche application sont préparées en <em>segments</em> (couche 4). L'échange préalable sécurise la communication pendant un temps donné.</li>
-                <li><strong>Non orienté connexion (ex: UDP) :</strong> Envoie directement les données sur le réseau sans établir de circuit au préalable et sans attendre de confirmation.</li>
+                <li><strong>Orienté connexion (ex: TCP) :</strong> Établit un dialogue formel (*handshake*) entre la source et le destinataire avant tout transfert. Les données de la couche application sont préparées en <em>segments</em> (couche 4). L'échange sécurise la communication pendant un temps donné.</li>
+                <li><strong>Non orienté connexion (ex: UDP) :</strong> Envoie directement les données sur le réseau sans établir de circuit préalable.</li>
             </ul>
 
             <div class="highlight">
                 <strong>Commutation de paquets vs Commutation de circuits :</strong><br>
                 • <em>Commutation de paquets :</em> Utilise un circuit logique temporaire (ex: Internet / TCP/IP). Les données sont découpées et acheminées indépendamment.<br>
-                • <em>Commutation de circuits :</em> Repose sur un circuit physique permanent et dédié pendant toute la durée de l'échange (ex: réseau téléphonique traditionnel RTC).
+                • <em>Commutation de circuits :</em> Repose sur un circuit physique permanent et dédié (ex: téléphone fixe).
             </div>
         </div>
 
         <div class="card">
             <h3>2. Origine Historique & Rôle de TCP/IP</h3>
-            <p>La forme actuelle de TCP/IP résulte du rôle historique qu'il a joué dans la création d'Internet. Internet est issu des recherches lancées aux États-Unis par le **DOD** (<em>Department of Defense</em>).</p>
-            <p>Ses fonctions essentielles ne devaient en aucun cas se trouver centralisées en un seul point, afin de ne pas rendre le réseau vulnérable en cas d'attaque. C'est ainsi qu'a été mis en place le projet **ARPANET** (<em>Advanced Research Projects Agency</em>), qui est devenu par la suite le système d'interconnexion régissant l'Internet moderne : le modèle **TCP/IP**.</p>
+            <p>La forme actuelle de TCP/IP résulte du rôle historique qu'il a joué dans la création d'Internet, issu des recherches lancées aux États-Unis par le <strong>DOD</strong> (<em>Department of Defense</em>).</p>
+            <p>Pour éviter toute vulnérabilité liée à un point unique, le projet <strong>ARPANET</strong> (<em>Advanced Research Projects Agency</em>) a structuré ce système d'interconnexion décentralisé : le modèle <strong>TCP/IP</strong>.</p>
         </div>
 
         <div class="card">
             <h3>3. Le Modèle TCP/IP (4 Couches)</h3>
-            <p>Le modèle TCP/IP s'articule autour de 4 couches fondamentales :</p>
-
             <div class="schema-box">
                 <svg width="380" height="180" viewBox="0 0 380 180">
                     <rect x="40" y="5" width="300" height="35" rx="5" fill="#7c3aed"/><text x="190" y="27" fill="white" text-anchor="middle" font-size="14" font-weight="bold">4. Application (HTTP, DNS, FTP, SMTP)</text>
@@ -168,41 +162,27 @@
                     <rect x="40" y="134" width="300" height="35" rx="5" fill="#172554"/><text x="190" y="156" fill="white" text-anchor="middle" font-size="14" font-weight="bold">1. Accès Réseau (Ethernet, Wi-Fi)</text>
                 </svg>
             </div>
-
             <table>
                 <tr><th>Couche TCP/IP</th><th>Couche OSI équivalente</th><th>Unité de Donnée</th><th>Rôle principal</th></tr>
-                <tr><td>4. Application</td><td>7. Application<br>6. Présentation<br>5. Session</td><td>Données / Message</td><td>Interface avec les logiciels utilisateurs (HTTP, HTTPS, DNS, SSH, FTP).</td></tr>
-                <tr><td>3. Transport</td><td>4. Transport</td><td>Segment (TCP)<br>Datagramme (UDP)</td><td>Gestion du dialogue de bout en bout et contrôle de flux.</td></tr>
-                <tr><td>2. Internet</td><td>3. Réseau</td><td>Paquet</td><td>Adressage logique (IP) et routage des données sur le réseau.</td></tr>
-                <tr><td>1. Accès Réseau</td><td>2. Liaison<br>1. Physique</td><td>Trame / Bits</td><td>Transmission physique des signaux sur le support (Ethernet, Wi-Fi).</td></tr>
+                <tr><td>4. Application</td><td>7, 6, 5 (App, Prés., Sess.)</td><td>Données / Message</td><td>Interface avec les logiciels (HTTP, DNS, SSH, FTP).</td></tr>
+                <tr><td>3. Transport</td><td>4. Transport</td><td>Segment (TCP) / Datagramme (UDP)</td><td>Gestion du dialogue de bout en bout et contrôle.</td></tr>
+                <tr><td>2. Internet</td><td>3. Réseau</td><td>Paquet</td><td>Adressage logique (IP) et routage.</td></tr>
+                <tr><td>1. Accès Réseau</td><td>2, 1 (Liaison, Physique)</td><td>Trame / Bits</td><td>Transmission physique des signaux (Ethernet, Wi-Fi).</td></tr>
             </table>
         </div>
-
-        <div class="card">
-            <h3>4. Adressage IPv4 & Classes</h3>
-            <table>
-                <tr><th>Classe</th><th>Plage IP</th><th>Masque par défaut</th><th>Utilisation</th></tr>
-                <tr><td>A</td><td>1.0.0.0 à 126.255.255.255</td><td>255.0.0.0 (/8)</td><td>Très grandes structures</td></tr>
-                <tr><td>B</td><td>128.0.0.0 à 191.255.255.255</td><td>255.255.0.0 (/16)</td><td>Moyennes & grandes entreprises</td></tr>
-                <tr><td>C</td><td>192.0.0.0 à 223.255.255.255</td><td>255.255.255.0 (/24)</td><td>Réseaux locaux domestiques/PME</td></tr>
-            </table>
-            <div class="highlight"><strong>Adresses IP Privées :</strong> 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (non routables publiquement sur Internet).</div>
-        </div>
-
     </div>
 
     <div id="sertissage" class="content">
         <div class="card">
             <h3>🛠️ Norme de câblage RJ45 (T568B)</h3>
-            <p>La norme T568B est la plus fréquemment utilisée pour confectionner un câble droit (connexion Switch vers PC).</p>
-            
+            <p>Ordre des brins de gauche à droite, languette plastique vers le bas :</p>
             <ul class="wire-list" style="margin-top:15px;">
-                <li class="wire-item wire-1"><span>Broche 1 : Blanc / Orange</span><span>Émission (Tx+)</span></li>
-                <li class="wire-item wire-2"><span>Broche 2 : Orange</span><span>Émission (Tx-)</span></li>
-                <li class="wire-item wire-3"><span>Broche 3 : Blanc / Vert</span><span>Réception (Rx+)</span></li>
+                <li class="wire-item wire-1"><span>Broche 1 : Blanc / Orange</span><span>Tx+</span></li>
+                <li class="wire-item wire-2"><span>Broche 2 : Orange</span><span>Tx-</span></li>
+                <li class="wire-item wire-3"><span>Broche 3 : Blanc / Vert</span><span>Rx+</span></li>
                 <li class="wire-item wire-4"><span>Broche 4 : Bleu</span><span>Réservé</span></li>
                 <li class="wire-item wire-5"><span>Broche 5 : Blanc / Bleu</span><span>Réservé</span></li>
-                <li class="wire-item wire-6"><span>Broche 6 : Vert</span><span>Réception (Rx-)</span></li>
+                <li class="wire-item wire-6"><span>Broche 6 : Vert</span><span>Rx-</span></li>
                 <li class="wire-item wire-7"><span>Broche 7 : Blanc / Marron</span><span>Réservé</span></li>
                 <li class="wire-item wire-8"><span>Broche 8 : Marron</span><span>Réservé</span></li>
             </ul>
@@ -212,15 +192,13 @@
     <div id="cli" class="content">
         <div class="card">
             <h3>🖥️ Terminal de commande simulé</h3>
-            <p>Saisissez des commandes réseau réelles pour tester le terminal (ex: <code>help</code>, <code>ping 8.8.8.8</code>, <code>ipconfig</code>, <code>traceroute google.com</code>, <code>nslookup openfirewall.org</code>, <code>clear</code>).</p>
-            
+            <p>Commandes disponibles : <code>help</code>, <code>ping [ip]</code>, <code>ipconfig</code>, <code>traceroute [hôte]</code>, <code>nslookup [domaine]</code>, <code>clear</code>.</p>
             <div class="terminal" id="termOutput">
-                <div>Bienvenue dans la console réseau v1.0.</div>
-                <div>Tapez 'help' pour afficher la liste des commandes disponibles.</div>
+                <div>Bienvenue dans la console réseau v1.1.</div>
+                <div>Tapez 'help' pour afficher la liste des commandes.</div>
             </div>
-            
             <div class="terminal-input-container">
-                <input type="text" id="termInput" style="flex:1;" placeholder="Saisissez votre commande ici..." onkeydown="if(event.key==='Enter') execCmd()">
+                <input type="text" id="termInput" style="flex:1;" placeholder="Saisissez votre commande..." onkeydown="if(event.key==='Enter') execCmd()">
                 <button class="btn" onclick="execCmd()">Exécuter</button>
             </div>
         </div>
@@ -229,8 +207,7 @@
     <div id="outils" class="content">
         <div class="card">
             <h3>🧮 Calculateur de Sous-Réseau CIDR</h3>
-            <p>Saisissez une adresse IPv4 avec son CIDR (ex: <code>192.168.1.100/26</code>) :</p>
-            <br>
+            <p>Saisissez une adresse IPv4 avec son CIDR (ex: <code>192.168.1.100/26</code>) :</p><br>
             <input type="text" id="cidrInput" value="192.168.1.100/26">
             <button class="btn" onclick="analyserCIDR()">Analyser</button>
             <pre id="cidrOutput">En attente de calcul...</pre>
@@ -241,22 +218,19 @@
         <div class="card">
             <h3>✏️ Exercices pratiques</h3>
             <div class="exo-box">
-                <h4>1. Définition et mécanismes de connexion</h4>
-                <p>Quelle est la différence fondamentale entre la commutation de paquets et la commutation de circuits ?</p>
+                <h4>1. Commutation</h4>
+                <p>Quelle est la différence entre commutation de paquets et commutation de circuits ?</p>
                 <button class="btn btn-secondary" onclick="toggleExo(1)">Voir la réponse</button>
                 <div id="exoAns1" style="display:none; margin-top:10px;">
-                    La <strong>commutation de circuits</strong> établit une voie physique dédiée et permanente pendant toute la durée de la communication (ex: téléphone fixe).<br>
-                    La <strong>commutation de paquets</strong> découpe les données en morceaux acheminés indépendamment via des circuits logiques temporaires (ex: TCP/IP sur Internet).
+                    Circuit = ligne dédiée permanente (RTC). Paquets = découpage dynamique en morceaux (Internet / IP).
                 </div>
             </div>
-
             <div class="exo-box">
-                <h4>2. Calcul de sous-réseau (/27)</h4>
-                <p>Combien d'hôtes utilisables contient un sous-réseau avec un masque /27 (255.255.255.224) ?</p>
+                <h4>2. Sous-réseau (/27)</h4>
+                <p>Combien d'hôtes utilisables contient un sous-réseau en /27 ?</p>
                 <button class="btn btn-secondary" onclick="toggleExo(2)">Voir la réponse</button>
                 <div id="exoAns2" style="display:none; margin-top:10px;">
-                    Un masque /27 laisse 32 - 27 = 5 bits pour les hôtes.<br>
-                    Nombre d'hôtes utilisables = 2⁵ - 2 = 32 - 2 = <strong>30 hôtes</strong>.
+                    32 - 27 = 5 bits hôtes -> $2^5 - 2 = 30$ hôtes utilisables.
                 </div>
             </div>
         </div>
@@ -265,21 +239,18 @@
     <div id="quiz" class="content">
         <div class="card">
             <h3>🧠 Évaluation rapide</h3>
-
             <div class="quiz-question">
-                <p>1. Quel projet de l'agence ARPA du département de la défense américain (DOD) est à l'origine de TCP/IP ?</p>
+                <p>1. Quel projet de l'ARPA a structuré le modèle Internet TCP/IP ?</p>
                 <label><input type="radio" name="qz1" value="a"> INTERNETNET</label>
                 <label><input type="radio" name="qz1" value="b"> ARPANET</label>
                 <label><input type="radio" name="qz1" value="c"> ETHERNET</label>
             </div>
-
             <div class="quiz-question">
-                <p>2. Comment s'appelle l'unité de donnée traitée à la couche Transport par TCP ?</p>
+                <p>2. Quelle est l'unité de donnée traitée par TCP à la couche Transport ?</p>
                 <label><input type="radio" name="qz2" value="a"> Paquet</label>
                 <label><input type="radio" name="qz2" value="b"> Trame</label>
                 <label><input type="radio" name="qz2" value="c"> Segment</label>
             </div>
-
             <button class="btn" onclick="evalQuiz()">Soumettre</button>
             <div id="quizScore" class="score-box"></div>
         </div>
@@ -287,7 +258,6 @@
 </div>
 
 <script>
-    // Gestion Thème Sombre / Clair
     function toggleTheme() {
         const body = document.body;
         const currentTheme = body.getAttribute('data-theme');
@@ -296,7 +266,6 @@
         document.querySelector('.theme-toggle').textContent = newTheme === 'dark' ? '☀️ Mode Clair' : '🌙 Mode Sombre';
     }
 
-    // Navigation Onglets
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -306,7 +275,6 @@
         });
     });
 
-    // Console / Terminal
     function execCmd() {
         const input = document.getElementById('termInput');
         const output = document.getElementById('termOutput');
@@ -327,27 +295,27 @@
 
         switch (mainCmd) {
             case 'help':
-                res.textContent = "Commandes valides : ping [ip], ipconfig, traceroute [hôte], nslookup [domaine], clear, help";
+                res.textContent = "Commandes : ping [ip], ipconfig, traceroute [hôte], nslookup [domaine], clear, help";
                 break;
             case 'ping':
-                res.textContent = arg ? `Envoi de paquets ICMP vers ${arg}...\nRéponse de ${arg}: temps=14ms TTL=56\nRéponse de ${arg}: temps=12ms TTL=56\n3 paquets transmis, 0% de perte.` : "Usage: ping <adresse_ip>";
+                res.textContent = arg ? `Envoi de paquets vers ${arg}...\nRéponse : temps=12ms TTL=56\n0% de perte.` : "Usage: ping <ip>";
                 break;
             case 'ipconfig':
-                res.textContent = "Carte Ethernet :\n   Adresse IPv4 . . . . . . . . . . . : 192.168.1.45\n   Masque de sous-réseau . . . . . . : 255.255.255.0\n   Passerelle par défaut . . . . . . : 192.168.1.1";
+                res.textContent = "IP : 192.168.1.45\nMasque : 255.255.255.0\nPasserelle : 192.168.1.1";
                 break;
             case 'traceroute':
             case 'tracert':
-                res.textContent = arg ? `Détermination de l'itinéraire vers ${arg} :\n  1  1 ms  1 ms  192.168.1.1\n  2  10 ms 8 ms  10.200.0.1\n  3  15 ms 14 ms ${arg}` : "Usage: traceroute <domaine_ou_ip>";
+                res.textContent = arg ? `Itinéraire vers ${arg} :\n  1  1 ms  192.168.1.1\n  2  12 ms ${arg}` : "Usage: traceroute <hôte>";
                 break;
             case 'nslookup':
-                res.textContent = arg ? `Serveur : Unspecified\nAddress: 1.1.1.1\nNom : ${arg}\nAddress: 104.21.28.112` : "Usage: nslookup <domaine>";
+                res.textContent = arg ? `Serveur : local\nNom : ${arg}\nAdresse : 104.21.28.112` : "Usage: nslookup <domaine>";
                 break;
             case 'clear':
                 output.innerHTML = '';
                 input.value = '';
                 return;
             default:
-                res.textContent = `'${mainCmd}' n'est pas reconnu comme une commande interne. Tapez 'help'.`;
+                res.textContent = `'${mainCmd}' non reconnu. Tapez 'help'.`;
                 res.style.color = '#ef4444';
         }
 
@@ -356,20 +324,19 @@
         input.value = '';
     }
 
-    // Calculateur Subnet
     function analyserCIDR() {
         const val = document.getElementById('cidrInput').value.trim();
         const out = document.getElementById('cidrOutput');
         const match = val.match(/^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\/(\d{1,2})$/);
 
         if (!match) {
-            out.textContent = "Erreur : Format IP/CIDR invalide. Exemple: 192.168.1.0/24";
+            out.textContent = "Erreur : Format requis (ex: 192.168.1.0/24)";
             return;
         }
 
         const cidr = parseInt(match[2]);
         if (cidr < 0 || cidr > 32) {
-            out.textContent = "Erreur : Le CIDR doit être compris entre /0 et /32";
+            out.textContent = "Erreur : CIDR entre 0 et 32 requis.";
             return;
         }
 
@@ -377,16 +344,14 @@
         const totalHosts = Math.pow(2, hostBits);
         const usableHosts = hostBits >= 2 ? totalHosts - 2 : (hostBits === 1 ? 0 : 1);
 
-        out.textContent = `--- RÉSULTAT DU CALCUL ---\nAdresse saisie : ${match[1]}\nNotation CIDR   : /${cidr}\nBits d'hôte     : ${hostBits}\nCapacité totale : ${totalHosts} adresses\nHôtes utiles    : ${usableHosts} machines`;
+        out.textContent = `--- RÉSULTAT ---\nIP : ${match[1]} /${cidr}\nBits hôtes : ${hostBits}\nCapacité totale : ${totalHosts}\nHôtes utiles : ${usableHosts}`;
     }
 
-    // Exercices
     function toggleExo(id) {
         const el = document.getElementById('exoAns' + id);
         el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 
-    // Quiz
     function evalQuiz() {
         const q1 = document.querySelector('input[name="qz1"]:checked');
         const q2 = document.querySelector('input[name="qz2"]:checked');
@@ -397,8 +362,8 @@
         if (q1 && q1.value === 'b') score++;
         if (q2 && q2.value === 'c') score++;
 
-        box.innerHTML = `Votre score : <strong>${score} / 2</strong><br>` + 
-                        (score === 2 ? "Excellence ! Toutes les réponses sont correctes." : "Revisitez la section théorique pour réviser.");
+        box.innerHTML = `Score : <strong>${score} / 2</strong><br>` + 
+                        (score === 2 ? "Parfait ! Tout est correct." : "Relisez les sections de cours correspondantes.");
         box.style.background = score === 2 ? "#10b981" : "#f59e0b";
     }
 </script>
