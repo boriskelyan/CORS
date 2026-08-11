@@ -1,10 +1,11 @@
+HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cours complet, stable et interactif sur les réseaux informatiques, le modèle TCP/IP et le sertissage RJ45.">
-    <title>Apprendre le Réseau - Version Corrigée & Stable</title>
+    <meta name="description" content="Cours complet, stable et interactif sur les réseaux informatiques, TCP vs UDP, DHCP, DNS et NAT.">
+    <title>Apprendre le Réseau - Version Corrigée avec Schémas</title>
     <style>
         :root {
             --bg-color: #f0f4f8;
@@ -30,6 +31,7 @@
             --accent-blue: #334155;
             --border-color: #334155;
             --box-bg: #0f172a;
+            --code-text: #38bdf8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,13 +60,13 @@
         .card li { margin-bottom: 5px; }
         
         .highlight { background: rgba(59, 130, 246, 0.1); padding: 12px 15px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #3b82f6; }
-        .schema-box { background: var(--box-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; overflow-x: auto; }
+        .schema-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; overflow-x: auto; }
         
-        pre { background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 8px; overflow-x: auto; margin: 10px 0; font-size: 0.93rem; }
+        pre { background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 8px; overflow-x: auto; margin: 10px 0; font-size: 0.93rem; font-family: Consolas, Monaco, monospace; text-align: left; }
         code { font-family: Consolas, Monaco, monospace; }
         
         /* Terminal */
-        .terminal { background: #0c0c0c; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; min-height: 180px; max-height: 300px; overflow-y: auto; margin: 10px 0; }
+        .terminal { background: #0c0c0c; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; min-height: 180px; max-height: 300px; overflow-y: auto; margin: 10px 0; text-align: left; }
         .terminal-input-container { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
         
         /* Boutons & Champs */
@@ -79,23 +81,11 @@
         th { background: #1a3c6e; color: white; }
         
         /* Quiz & Exercices */
-        .quiz-question { margin: 16px 0; padding: 16px; background: var(--box-bg); border-radius: 10px; border: 1px solid var(--border-color); }
+        .quiz-question { margin: 16px 0; padding: 16px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); text-align: left; }
         .quiz-question p { font-weight: 600; margin-bottom: 8px; }
-        .quiz-options label { display: block; margin: 6px 0; cursor: pointer; }
+        .quiz-question label { display: block; margin: 6px 0; cursor: pointer; }
         .score-box { background: #1a3c6e; color: white; padding: 16px; border-radius: 10px; text-align: center; margin-top: 20px; font-size: 1.15rem; display: none; }
-        .exo-box { background: rgba(249, 115, 22, 0.08); border-left: 5px solid #f97316; padding: 16px; margin: 14px 0; border-radius: 0 10px 10px 0; }
-        
-        /* RJ45 Colors */
-        .wire-list { list-style: none !important; margin-left: 0 !important; }
-        .wire-item { padding: 6px 12px; margin: 4px 0; border-radius: 4px; font-weight: bold; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: space-between; }
-        .wire-1 { background: linear-gradient(90deg, #ffffff 50%, #ff7700 50%); color: #000; text-shadow: none; border: 1px solid #ccc; }
-        .wire-2 { background: #ff7700; }
-        .wire-3 { background: linear-gradient(90deg, #ffffff 50%, #00aa00 50%); color: #000; text-shadow: none; border: 1px solid #ccc; }
-        .wire-4 { background: #0066cc; }
-        .wire-5 { background: linear-gradient(90deg, #ffffff 50%, #0066cc 50%); color: #000; text-shadow: none; border: 1px solid #ccc; }
-        .wire-6 { background: #00aa00; }
-        .wire-7 { background: linear-gradient(90deg, #ffffff 50%, #8b4513 50%); color: #000; text-shadow: none; border: 1px solid #ccc; }
-        .wire-8 { background: #8b4513; }
+        .exo-box { background: rgba(249, 115, 22, 0.08); border-left: 5px solid #f97316; padding: 16px; margin: 14px 0; border-radius: 0 10px 10px 0; text-align: left; }
 
         @media print {
             body { background: white; color: black; }
@@ -111,7 +101,7 @@
     <div class="header">
         <div>
             <h1>📡 Le Guide du Réseau Informatique</h1>
-            <p class="subtitle">Cours complet, câblage RJ45, simulateur CLI & quiz</p>
+            <p class="subtitle">Cours complet, TCP/IP, DHCP, DNS, NAT & Pratique</p>
         </div>
         <div>
             <button class="theme-toggle" onclick="toggleTheme()">🌙 Mode Sombre</button>
@@ -121,7 +111,7 @@
 
     <div class="tabs">
         <button class="tab active" data-tab="cours">📘 Cours & Notions</button>
-        <button class="tab" data-tab="sertissage">🛠️ Sertissage RJ45</button>
+        <button class="tab" data-tab="services">⚙️ TCP, UDP, DHCP, DNS</button>
         <button class="tab" data-tab="cli">🖥️ Terminal CLI Interactif</button>
         <button class="tab" data-tab="outils">🧮 Outils & Calculateurs</button>
         <button class="tab" data-tab="exercices">✏️ Exercices</button>
@@ -135,57 +125,62 @@
             
             <h4>Protocoles orientés connexion vs non orientés connexion :</h4>
             <ul>
-                <li><strong>Orienté connexion (ex: TCP) :</strong> Établit un dialogue formel (*handshake*) entre la source et le destinataire avant tout transfert. Les données de la couche application sont préparées en <em>segments</em> (couche 4). L'échange sécurise la communication pendant un temps donné.</li>
-                <li><strong>Non orienté connexion (ex: UDP) :</strong> Envoie directement les données sur le réseau sans établir de circuit préalable.</li>
+                <li><strong>Orienté connexion (ex: TCP) :</strong> Établit un dialogue formel (*handshake*) entre la source et le destinataire avant tout transfert. Les données sont préparées en <em>segments</em> (couche 4).</li>
+                <li><strong>Non orienté connexion (ex: UDP) :</strong> Envoie directement les données sur le réseau sans circuit préalable.</li>
             </ul>
 
             <div class="highlight">
                 <strong>Commutation de paquets vs Commutation de circuits :</strong><br>
-                • <em>Commutation de paquets :</em> Utilise un circuit logique temporaire (ex: Internet / TCP/IP). Les données sont découpées et acheminées indépendamment.<br>
-                • <em>Commutation de circuits :</em> Repose sur un circuit physique permanent et dédié (ex: téléphone fixe).
+                • <em>Commutation de paquets :</em> Circuit logique temporaire (ex: Internet / TCP/IP). Données découpées et acheminées indépendamment.<br>
+                • <em>Commutation de circuits :</em> Circuit physique permanent et dédié (ex: téléphonie fixe).
             </div>
         </div>
 
         <div class="card">
-            <h3>2. Origine Historique & Rôle de TCP/IP</h3>
-            <p>La forme actuelle de TCP/IP résulte du rôle historique qu'il a joué dans la création d'Internet, issu des recherches lancées aux États-Unis par le <strong>DOD</strong> (<em>Department of Defense</em>).</p>
-            <p>Pour éviter toute vulnérabilité liée à un point unique, le projet <strong>ARPANET</strong> (<em>Advanced Research Projects Agency</em>) a structuré ce système d'interconnexion décentralisé : le modèle <strong>TCP/IP</strong>.</p>
-        </div>
-
-        <div class="card">
-            <h3>3. Le Modèle TCP/IP (4 Couches)</h3>
+            <h3>2. Origine Historique & Modèle TCP/IP</h3>
+            <p>La forme actuelle de TCP/IP provient des recherches du <strong>DOD</strong> (<em>Department of Defense</em>) à travers le projet <strong>ARPANET</strong>, visant à concevoir un réseau décentralisé et résilient.</p>
+            
             <div class="schema-box">
-                <svg width="380" height="180" viewBox="0 0 380 180">
-                    <rect x="40" y="5" width="300" height="35" rx="5" fill="#7c3aed"/><text x="190" y="27" fill="white" text-anchor="middle" font-size="14" font-weight="bold">4. Application (HTTP, DNS, FTP, SMTP)</text>
-                    <rect x="40" y="48" width="300" height="35" rx="5" fill="#1d4ed8"/><text x="190" y="70" fill="white" text-anchor="middle" font-size="14" font-weight="bold">3. Transport (TCP, UDP)</text>
-                    <rect x="40" y="91" width="300" height="35" rx="5" fill="#1e40af"/><text x="190" y="113" fill="white" text-anchor="middle" font-size="14" font-weight="bold">2. Internet / Réseau (IP, ICMP, ARP)</text>
-                    <rect x="40" y="134" width="300" height="35" rx="5" fill="#172554"/><text x="190" y="156" fill="white" text-anchor="middle" font-size="14" font-weight="bold">1. Accès Réseau (Ethernet, Wi-Fi)</text>
+                <svg width="360" height="175" viewBox="0 0 360 175">
+                    <rect x="30" y="5" width="300" height="32" rx="5" fill="#7c3aed"/><text x="180" y="25" fill="white" text-anchor="middle" font-size="13" font-weight="bold">4. Application (HTTP, DNS, FTP, SMTP)</text>
+                    <rect x="30" y="45" width="300" height="32" rx="5" fill="#1d4ed8"/><text x="180" y="65" fill="white" text-anchor="middle" font-size="13" font-weight="bold">3. Transport (TCP, UDP)</text>
+                    <rect x="30" y="85" width="300" height="32" rx="5" fill="#1e40af"/><text x="180" y="105" fill="white" text-anchor="middle" font-size="13" font-weight="bold">2. Internet / Réseau (IPv4, IPv6, ICMP)</text>
+                    <rect x="30" y="125" width="300" height="32" rx="5" fill="#172554"/><text x="180" y="145" fill="white" text-anchor="middle" font-size="13" font-weight="bold">1. Accès Réseau (Ethernet, Wi-Fi)</text>
                 </svg>
             </div>
-            <table>
-                <tr><th>Couche TCP/IP</th><th>Couche OSI équivalente</th><th>Unité de Donnée</th><th>Rôle principal</th></tr>
-                <tr><td>4. Application</td><td>7, 6, 5 (App, Prés., Sess.)</td><td>Données / Message</td><td>Interface avec les logiciels (HTTP, DNS, SSH, FTP).</td></tr>
-                <tr><td>3. Transport</td><td>4. Transport</td><td>Segment (TCP) / Datagramme (UDP)</td><td>Gestion du dialogue de bout en bout et contrôle.</td></tr>
-                <tr><td>2. Internet</td><td>3. Réseau</td><td>Paquet</td><td>Adressage logique (IP) et routage.</td></tr>
-                <tr><td>1. Accès Réseau</td><td>2, 1 (Liaison, Physique)</td><td>Trame / Bits</td><td>Transmission physique des signaux (Ethernet, Wi-Fi).</td></tr>
-            </table>
         </div>
     </div>
 
-    <div id="sertissage" class="content">
+    <div id="services" class="content">
         <div class="card">
-            <h3>🛠️ Norme de câblage RJ45 (T568B)</h3>
-            <p>Ordre des brins de gauche à droite, languette plastique vers le bas :</p>
-            <ul class="wire-list" style="margin-top:15px;">
-                <li class="wire-item wire-1"><span>Broche 1 : Blanc / Orange</span><span>Tx+</span></li>
-                <li class="wire-item wire-2"><span>Broche 2 : Orange</span><span>Tx-</span></li>
-                <li class="wire-item wire-3"><span>Broche 3 : Blanc / Vert</span><span>Rx+</span></li>
-                <li class="wire-item wire-4"><span>Broche 4 : Bleu</span><span>Réservé</span></li>
-                <li class="wire-item wire-5"><span>Broche 5 : Blanc / Bleu</span><span>Réservé</span></li>
-                <li class="wire-item wire-6"><span>Broche 6 : Vert</span><span>Rx-</span></li>
-                <li class="wire-item wire-7"><span>Broche 7 : Blanc / Marron</span><span>Réservé</span></li>
-                <li class="wire-item wire-8"><span>Broche 8 : Marron</span><span>Réservé</span></li>
-            </ul>
+            <h3>6. TCP vs UDP</h3>
+            <p><strong>TCP</strong> est fiable, vérifie la réception et établit une connexion (*Three-Way Handshake*).</p>
+            
+            <pre>Client ─── [ SYN ] ────────► Serveur
+Client ◄── [ SYN-ACK ] ────── Serveur
+Client ─── [ ACK ] ────────► Serveur (Connexion établie)</pre>
+
+            <div class="highlight">
+                <strong>UDP</strong> est non orienté connexion : rapide, sans contrôle de livraison (parfait pour le streaming, la voix sur IP et le jeu vidéo).
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>7. DHCP et DNS</h3>
+            <h4>DHCP (Dynamic Host Configuration Protocol)</h4>
+            <p>Attribue automatiquement la configuration IP selon la séquence <strong>DORA</strong> :</p>
+            <pre>1. Discover  ► Le client cherche un serveur DHCP (Broadcast)
+2. Offer     ► Le serveur propose une IP
+3. Request   ► Le client confirme la demande d'IP
+4. Acknowledge ► Le serveur valide le bail</pre>
+
+            <h4 style="margin-top:15px;">DNS (Domain Name System)</h4>
+            <p>Annuaire d'Internet traduisant les noms de domaine en adresses IP (ex: <code>google.com</code> ➔ <code>142.250.185.78</code>).</p>
+        </div>
+
+        <div class="card">
+            <h3>8. NAT (Network Address Translation)</h3>
+            <p>Permet d'économiser les adresses IPv4 en faisant partager une unique adresse IP publique à l'ensemble des équipements d'un réseau privé.</p>
         </div>
     </div>
 
@@ -194,7 +189,7 @@
             <h3>🖥️ Terminal de commande simulé</h3>
             <p>Commandes disponibles : <code>help</code>, <code>ping [ip]</code>, <code>ipconfig</code>, <code>traceroute [hôte]</code>, <code>nslookup [domaine]</code>, <code>clear</code>.</p>
             <div class="terminal" id="termOutput">
-                <div>Bienvenue dans la console réseau v1.1.</div>
+                <div>Bienvenue dans la console réseau v1.2.</div>
                 <div>Tapez 'help' pour afficher la liste des commandes.</div>
             </div>
             <div class="terminal-input-container">
@@ -218,11 +213,11 @@
         <div class="card">
             <h3>✏️ Exercices pratiques</h3>
             <div class="exo-box">
-                <h4>1. Commutation</h4>
-                <p>Quelle est la différence entre commutation de paquets et commutation de circuits ?</p>
+                <h4>1. Étapes DHCP</h4>
+                <p>Quelles sont les 4 étapes du protocole DHCP désignées par l'acronyme DORA ?</p>
                 <button class="btn btn-secondary" onclick="toggleExo(1)">Voir la réponse</button>
                 <div id="exoAns1" style="display:none; margin-top:10px;">
-                    Circuit = ligne dédiée permanente (RTC). Paquets = découpage dynamique en morceaux (Internet / IP).
+                    Discover, Offer, Request, Acknowledge.
                 </div>
             </div>
             <div class="exo-box">
@@ -230,7 +225,7 @@
                 <p>Combien d'hôtes utilisables contient un sous-réseau en /27 ?</p>
                 <button class="btn btn-secondary" onclick="toggleExo(2)">Voir la réponse</button>
                 <div id="exoAns2" style="display:none; margin-top:10px;">
-                    32 - 27 = 5 bits hôtes -> $2^5 - 2 = 30$ hôtes utilisables.
+                    32 - 27 = 5 bits hôtes -> 2⁵ - 2 = 30 hôtes utilisables.
                 </div>
             </div>
         </div>
@@ -240,16 +235,16 @@
         <div class="card">
             <h3>🧠 Évaluation rapide</h3>
             <div class="quiz-question">
-                <p>1. Quel projet de l'ARPA a structuré le modèle Internet TCP/IP ?</p>
-                <label><input type="radio" name="qz1" value="a"> INTERNETNET</label>
-                <label><input type="radio" name="qz1" value="b"> ARPANET</label>
-                <label><input type="radio" name="qz1" value="c"> ETHERNET</label>
+                <p>1. Quel protocole assure une connexion fiable avec un mécanisme de type Three-Way Handshake ?</p>
+                <label><input type="radio" name="qz1" value="a"> UDP</label>
+                <label><input type="radio" name="qz1" value="b"> TCP</label>
+                <label><input type="radio" name="qz1" value="c"> IP</label>
             </div>
             <div class="quiz-question">
-                <p>2. Quelle est l'unité de donnée traitée par TCP à la couche Transport ?</p>
-                <label><input type="radio" name="qz2" value="a"> Paquet</label>
-                <label><input type="radio" name="qz2" value="b"> Trame</label>
-                <label><input type="radio" name="qz2" value="c"> Segment</label>
+                <p>2. Quel service traduit un nom de domaine (ex: google.com) en adresse IP ?</p>
+                <label><input type="radio" name="qz2" value="a"> DHCP</label>
+                <label><input type="radio" name="qz2" value="b"> NAT</label>
+                <label><input type="radio" name="qz2" value="c"> DNS</label>
             </div>
             <button class="btn" onclick="evalQuiz()">Soumettre</button>
             <div id="quizScore" class="score-box"></div>
@@ -308,7 +303,7 @@
                 res.textContent = arg ? `Itinéraire vers ${arg} :\n  1  1 ms  192.168.1.1\n  2  12 ms ${arg}` : "Usage: traceroute <hôte>";
                 break;
             case 'nslookup':
-                res.textContent = arg ? `Serveur : local\nNom : ${arg}\nAdresse : 104.21.28.112` : "Usage: nslookup <domaine>";
+                res.textContent = arg ? `Serveur : local\nNom : ${arg}\nAdresse : 142.250.185.78` : "Usage: nslookup <domaine>";
                 break;
             case 'clear':
                 output.innerHTML = '';
